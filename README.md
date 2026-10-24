@@ -25,12 +25,12 @@
   - Playtime: Enter the playtime of the music
 
 ## System
-- Compute the embedding $\bm{z^p}$ for Source Music
-- Compute the representative embedding $\bm{r^q}$ for Target Scene
+- Compute the embedding $\mathbf{z^p}$ for Source Music
+- Compute the representative embedding $\mathbf{r^q}$ for Target Scene
   - Collect music tracks to use in the same scene as Target Scene
   - Compute the center of embedding for collected music tracks
-- Predict the embedding $\bm{z^p}$ for Target Music from $\bm{z^p}$ and $\bm{r^q}$
-- Search for music with embeddings close to $\bm{z^p}$
+- Predict the embedding $\mathbf{z^p}$ for Target Music from $\mathbf{z^p}$ and $\mathbf{r^q}$
+- Search for music with embeddings close to $\mathbf{z^p}$
 
 ## Requirement
 - [tensorflow](https://www.tensorflow.org)
