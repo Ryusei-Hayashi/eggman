@@ -1,58 +1,36 @@
 # EgGMAn
 - This repository is for Deploying [EgGMAn (Engine of Game Music Analysis)](https://eggman.streamlit.app)
-- EgGMAn searches for game music considering game-wise consistency and scene-wise individuality
+- EgGMAn searches for game music balancing game-wise consistency and scene-wise individuality
 
 ## Usage
 ### Source Music
-- Enter the music prepared for the developing game
+- Enter the music prepared for the development game
   - Web Service: Enter the URL of [these sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
   - Direck Link: Enter the URL of the audio file
   - Audio file: Enter the uploaded audio file
 
-### Source Scene
-- Enter the scene that uses the prepared music combining tags
-- There are about 200 tags such as _Opening_, _Dungeon_, ...
-
-#### Mood of Source Scene
-- Enter the mood of the scene with Valence-Arousal
-  - Valence: Rises in positive scenes and falls in negative scenes
-  - Arousal: Rises in active scenes and falls in passive scenes
-
 ### Traget Scene
-- Enter the scene that uses the searched music combining tags
-- There are about 200 tags such as _Opening_, _Dungeon_, ...
+- Enter the scene where no music is prepared
+- Enter the scene by combining about 200 tags such as _Opening_, _Dungeon_, ...
 
-#### Mood of Target Scene
-- Enter the mood of the scene with Valence-Arousal
+#### Valence-Arousal of Target Scene
+- Enter the valence-arousal of the scene using sliders
   - Valence: Rises in positive scenes and falls in negative scenes
   - Arousal: Rises in active scenes and falls in passive scenes
 
 ### Target Music
-- EgGMAn searches for game music of Target Scene in the developing game
-  - Ignore Artist: Enter the artist not to be listed
-  - Ignore Site: Enter the site not to be listed
-  - Time Range: Enter the time of music to be listed
-  - Random Rate: Enter the ratio to reflect music distribution
-- Without Source Music, EgGMAn randomly searches for game music of Target Scene
+- EgGMAn searches for music in Target Scene for the development game
+  - Mute Artist: Enter the artist to mute
+  - Mute Site: Enter the site to mute
+  - Playtime: Enter the playtime of the music
 
 ## System
-### Source Music
-- Extract vector $z_p$ from Source Music
-
-### Source Scene
-- Create a set of music used in the same scene as Source Scene
-- Extract a set of vectors from the set of music
-- Compute vector $c_p$ of Source Scene from the center of the set of vectors
-
-### Target Scene
-- Create a set of music used in the same scene as Target Scene
-- Extract a set of vectors from the set of music
-- Compute vector $c_q$ of Target Scene from the center of the set of vectors
-
-### Target Music
-- Predict vector $z_q$ of Target Music from $z_p, c_p, c_q$ 
-- Compute the distance from $z_q$ to each music vector
-- Sort music in ascending order by distance
+- Compute the embedding $\bm{z^p}$ for Source Music
+- Compute the representative embedding $\bm{r^q}$ for Target Scene
+  - Collect music tracks to use in the same scene as Target Scene
+  - Compute the center of embedding for collected music tracks
+- Predict the embedding $\bm{z^p}$ for Target Music from $\bm{z^p}$ and $\bm{r^q}$
+- Search for music with embeddings close to $\bm{z^p}$
 
 ## Requirement
 - [tensorflow](https://www.tensorflow.org)
