@@ -3,11 +3,6 @@ import streamlit as st
 st.set_page_config('EgGMAn', ':musical_note:', 'wide', 'expanded')
 st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_container_width=True)
 
-def iframe(u, w, h):
-    st.markdown(f'<iframe src="{u}/preview" width="{w}" height="{h}"></iframe>', True)
-
 st.title('System')
-
-iframe('https://drive.google.com/file/d/1a167-_xiTrvA9JtiEfI8RST_T8996Stu', 700, 420)
-
+st.iframe('https://drive.google.com/file/d/1a167-_xiTrvA9JtiEfI8RST_T8996Stu/preview')
 st.maarkdown('- Compute the embedding $\mathbf{z^p}$ for Source Music\n- Compute the representative embedding $\mathbf{r^q}$ for Target Scene\n  - Collect music tracks to use in the same scene as Target Scene\n  - Compute the center of embedding for collected music tracks\n- Predict the embedding $\mathbf{z^q}$ for Target Music from $\mathbf{z^p}$ and $\mathbf{r^q}$\n- Search for music with embeddings close to $\mathbf{z^q}$')
