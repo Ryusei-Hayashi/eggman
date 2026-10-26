@@ -3,6 +3,7 @@ geomstats
 streamlit
 requests
 librosa
-yt_dlp
 gdown
 numpy
+
+yt_dlp[default]
