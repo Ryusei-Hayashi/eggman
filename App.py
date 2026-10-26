@@ -176,10 +176,10 @@ s = st.multiselect('Mute Site', ('Nash Music Library'))
 p = st.slider('Playtime', time(0), time(0, 59), (time(0), time(0, 59)), timedelta(seconds=10), 'mm:ss')
 f = st.toggle('Filter by Target Scene', True)
 if st.button('Search', type='primary'):
-    try:
-        r = rep(u, v, a, 0.01)
-        print(z, r)
-        d = D.loc[basic(b, s, p) & (scene('hard', u, a, v) if f else True)]
-        st.dataframe(d.iloc[(numpy.stack(d['vec']) @ opr(z, r)).argsort()[:-99:-1], :5].reset_index(drop=True), column_config={'URL': st.column_config.LinkColumn()})
-    except:
-        st.error('No music matches the conditions')
+    #try:
+    r = rep(u, v, a, 0.01)
+    print(z, r)
+    d = D.loc[basic(b, s, p) & (scene('hard', u, a, v) if f else True)]
+    st.dataframe(d.iloc[(numpy.stack(d['vec']) @ opr(z, r)).argsort()[:-99:-1], :5].reset_index(drop=True), column_config={'URL': st.column_config.LinkColumn()})
+    #except:
+     #   st.error('No music matches the conditions')
