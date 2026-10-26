@@ -1,5 +1,5 @@
-from geomstats.learning import frechet_mean, geometric_median
-from geomstats.geometry.hypersphere import Hypersphere
+#from geomstats.learning import frechet_mean, geometric_median
+#from geomstats.geometry.hypersphere import Hypersphere
 from datetime import time, timedelta
 from gdown import download_folder
 from yt_dlp import YoutubeDL
