@@ -156,7 +156,7 @@ st.image('imgs/logo.png')
 st.html('<center>EgGMAn (Engine of Game Music Analysis) searches for game music balancing game-wise consistency and scene-wise individuality</center>')
 
 st.header('Source Music')
-t = st.tabs(['URL Input', 'File Input'], default='URL Input')
+t = st.tabs(['URL Input', 'File Input'], on_change='rerun')
 print(t[0].open, t[1].open)
 if t[0].open:
     m = t[0].text_input('URL of Source Music')
