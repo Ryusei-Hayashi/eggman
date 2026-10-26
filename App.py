@@ -158,8 +158,10 @@ st.html('<center>EgGMAn (Engine of Game Music Analysis) searches for game music 
 st.header('Source Music')
 t = st.tabs(['URL Input', 'File Input'], default='URL Input')
 if t[0].open:
+    print('t0')
     m = t[0].text_input('URL of Source Music')
 if t[1].open:
+    print('t1')
     m = t[1].file_uploader('File of Source Music')
 z = music(m)
 
