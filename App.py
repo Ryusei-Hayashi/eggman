@@ -147,7 +147,7 @@ bin = 256
 seq = 256
 fps = 42
 sr = 22050
-yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'format': 'bestaudio', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'postprocessor_args': ['-ss', '0', '-t', '60'], 'overwrites': True})
+yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'cookiesfrombrowser': ('firefox',), 'format': 'bestaudio', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'postprocessor_args': ['-ss', '0', '-t', '60'], 'overwrites': True})
 
 M = model('data/model.pkl')
 D = table('data/table.pkl')
