@@ -175,7 +175,7 @@ st.header('Target Music')
 b = st.multiselect('Mute Artist', ('Nash Music Library'))
 s = st.multiselect('Mute Site', ('Nash Music Library'))
 p = st.slider('Playtime', time(0), time(0, 59), (time(0), time(0, 59)), timedelta(seconds=10), 'mm:ss')
-f = st.toggle('Filter by Target Scene')
+f = st.toggle('Filter by Target Scene', True)
 if st.button('Search', type='primary'):
     try:
         r = rep(u, v, a, 0.01)
