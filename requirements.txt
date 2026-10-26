@@ -1,7 +1,7 @@
 tensorflow
+geomstats
 streamlit
 requests
-essentia
 librosa
 yt_dlp
 gdown
