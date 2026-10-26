@@ -178,7 +178,7 @@ f = st.toggle('Filter by Target Scene', True)
 if st.button('Search', type='primary'):
     try:
         r = rep(u, v, a, 0.01)
-        d = D.loc[basic(b, s, p) & (scene('soft', u, a, v) if f else True)]
+        d = D.loc[basic(b, s, p) & (scene('hard', u, a, v) if f else True)]
         st.dataframe(d.iloc[(numpy.stack(d['vec']) @ opr(z, r)).argsort()[:-99:-1], :5].reset_index(drop=True), column_config={'URL': st.column_config.LinkColumn()})
     except:
         st.error('No music matches the conditions')
