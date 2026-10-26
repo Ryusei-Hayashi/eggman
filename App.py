@@ -117,7 +117,7 @@ def scene(c, t, a, v):
 
 @st.cache_data(max_entries=2)
 def basic(a, s, p):
-    return ~D['Artist'].isin(a) & ~D['Site'].isin(s) & p[0].strftime('%M:%S' <= D['Time'] & D['Time'] <= p[1].strftime('%M:%S')
+    return ~D['Artist'].isin(a) & ~D['Site'].isin(s) & p[0].strftime('%M:%S') <= D['Time'] & D['Time'] <= p[1].strftime('%M:%S')
 
 def idx(n, v):
     i = n.searchsorted(v)
@@ -146,8 +146,8 @@ dim = 256
 bin = 256
 seq = 256
 fps = 42
-sr = 22050
-yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'cookiesfrombrowser': ('firefox',), 'format': 'bestaudio', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'postprocessor_args': ['-ss', '0', '-t', '60'], 'overwrites': True})
+sr = 22050 #pとfの間
+yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'format': 'bestaudio', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'postprocessor_args': ['-ss', '0', '-t', '60'], 'overwrites': True})
 
 M = model('data/model.pkl')
 D = table('data/table.pkl')
