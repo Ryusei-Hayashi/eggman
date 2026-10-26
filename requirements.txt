@@ -5,5 +5,4 @@ requests
 librosa
 yt_dlp
 gdown
-
-numpy==1.26
+numpy
