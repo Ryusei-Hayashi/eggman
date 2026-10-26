@@ -112,7 +112,7 @@ def music(m):
         return pjt(M.predict(numpy.array([pad(s, b, fps * i) for i in range(20, 40, 6)])))
 
 @st.cache_data(max_entries=2)
-def scene(c, t, a, v):
+def scene(c, t, v, a):
     return D[c].apply(lambda x: set(t) <= set(x)) & (v[0] <= D['pn']) & (D['pn'] <= v[1]) & (a[0] <= D['ap']) & (D['ap'] <= a[1])
 
 @st.cache_data(max_entries=2)
@@ -134,8 +134,8 @@ def pjt(z):
     h, f = numpy.split(z, 2, -1)
     return l2n(numpy.mean(numpy.c_[l2n(h), l2n(f)], 0))
 
-def rep(t, a, v, r):
-    d = D.loc[scene('hard', t, a, v)]
+def rep(t, v, a, r):
+    d = D.loc[scene('hard', t, v, a)]
     c = d['hard'].apply(lambda x: sum(e in t for e in x))
     return l2n(numpy.stack(d.loc[c.nlargest(round(r * len(D))).min() <= c, 'vec']).mean(0))
 
@@ -169,6 +169,7 @@ st.subheader('Emotion of Target Scene')
 c = st.columns(2, gap='medium')
 v = c[0].slider('Valence of Target Scene', -1.0, 1.0, (-1.0, 1.0))
 a = c[1].slider('Arousal of Target Scene', -1.0, 1.0, (-1.0, 1.0))
+r = rep(u, v, a, 0.01)
 
 st.header('Target Music')
 b = st.multiselect('Mute Artist', ('Nash Music Library'))
@@ -176,10 +177,8 @@ s = st.multiselect('Mute Site', ('Nash Music Library'))
 p = st.slider('Playtime', time(0), time(0, 59), (time(0), time(0, 59)), timedelta(seconds=10), 'mm:ss')
 f = st.toggle('Filter by Target Scene', True)
 if st.button('Search', type='primary'):
-    #try:
-    r = rep(u, v, a, 0.01)
-    print(z, r)
-    d = D.loc[basic(b, s, p) & (scene('hard', u, a, v) if f else True)]
-    st.dataframe(d.iloc[(numpy.stack(d['vec']) @ opr(z, r)).argsort()[:-99:-1], :5].reset_index(drop=True), column_config={'URL': st.column_config.LinkColumn()})
-    #except:
-     #   st.error('No music matches the conditions')
+    try:
+        d = D.loc[basic(b, s, p) & (scene('hard', u, v, a) if f else True)]
+        st.dataframe(d.iloc[(numpy.stack(d['vec']) @ opr(z, r)).argsort()[:-99:-1], :5].reset_index(drop=True), column_config={'URL': st.column_config.LinkColumn()})
+    except:
+        st.error('No music matches the conditions')
