@@ -96,20 +96,19 @@ def table(p):
 
 @st.cache_data(max_entries=1)
 def music(m):
-    if m:
-        if isinstance(m, str):
-            r = get(m, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-            if 'html' in r.headers.get('Content-Type', '').lower():
-                yd.download([m])
-            else:
-                open('music.mp3', 'wb').write(r.content)
+    if isinstance(m, str):
+        r = get(m, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+        if 'html' in r.headers.get('Content-Type', '').lower():
+            yd.download([m])
         else:
-            open('music.mp3', 'wb').write(m.getvalue())
-        st.html(f'<audio src="data:audio/mp3;base64,{b64encode(open('music.mp3', 'rb').read()).decode()}" controlslist="nodownload" controls></audio>')
-        y = librosa.load('music.mp3', sr=sr, duration=60)[0]
-        b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
-        s = librosa.feature.melspectrogram(y=y, sr=sr, hop_length=sr//fps, n_mels=bin).T
-        return pjt(M.predict(numpy.array([pad(s, b, fps * i) for i in range(20, 40, 6)])))
+            open('music.mp3', 'wb').write(r.content)
+    else:
+        open('music.mp3', 'wb').write(m.getvalue())
+    st.html(f'<audio src="data:audio/mp3;base64,{b64encode(open('music.mp3', 'rb').read()).decode()}" controlslist="nodownload" controls></audio>')
+    y = librosa.load('music.mp3', sr=sr, duration=60)[0]
+    b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
+    s = librosa.feature.melspectrogram(y=y, sr=sr, hop_length=sr//fps, n_mels=bin).T
+    return pjt(M.predict(numpy.array([pad(s, b, fps * i) for i in range(20, 40, 6)])))
 
 @st.cache_data(max_entries=2)
 def scene(c, t, v, a):
@@ -137,7 +136,8 @@ def pjt(z):
 def rep(t, v, a, r):
     d = D.loc[scene('hard', t, v, a)]
     c = d['hard'].apply(lambda x: sum(e in t for e in x))
-    return l2n(numpy.stack(d.loc[c.nlargest(round(r * len(D))).min() <= c, 'vec']).mean(0))
+    z = numpy.stack(d.loc[c.nlargest(round(r * len(D))).min() <= c, 'vec'])
+    return l2n(numpy.mean(z, 0))
 
 def opr(z, r):
     return l2n(numpy.r_[z[:len(z)//2], r[len(r)//2:]])
@@ -161,7 +161,7 @@ if t[0].open:
     m = t[0].text_input('URL of Source Music')
 if t[1].open:
     m = t[1].file_uploader('File of Source Music')
-z = music(m)
+z = music(m) if m else l2n(numpy.random.randn(dim))
 
 st.header('Target Scene')
 u = st.multiselect('Tag of Target Scene', ('オープニング', 'エンディング', 'タイトル', 'イベント', 'チュートリアル', 'ゲーム失敗', 'ゲーム成功', 'ハイライト', 'セレクト画面', 'マップ画面', 'フィールド', 'ダンジョン', 'ステージ', 'ショップ', 'マイルーム', 'レストゾーン', '春', '夏', '秋', '冬', '朝', '昼', '夜', '明方', '夕方', '休日', '原始', '古代', '中世', '近代', '現代', '未来', '虹', '星', '晴', '曇', '霧', '雪', '砂', '雷', '雨', '小雨', '大雨', '暴風', '混沌', '朝焼け', '夕焼け', 'オーロラ', '異次元', '虚無', '宇宙', '陸', '海', '空', '東', '西', '南', '北', '氷', '炎', '花', '山', '谷', '坂', '崖', '岩', '島', '浜', '岸', '川', '沼', '湖', '泉', '温泉', '水辺', '水中', '洞窟', '地底', '地上', '砂漠', '草原', '森林', 'サバンナ', 'ジャングル', '仮想空間', '都会', '田舎', '街', '村', '橋', '道', '地下道', '路地裏', '飛行機', '鉄道', '船', '港', '駅', '宿', '店', '飲食店', '飲み屋', '遊園地', '動物園', '水族館', '博物館', '競技場', '公園', '法廷', '学校', '病院', '教会', '神社', '寺', '墓', '畑', '牧場', '工場', '倉庫', '研究所', '監獄', '要塞', '城', '庭', '家', '邸宅', '宮廷', '神殿', '遺跡', '廃墟', '隠れ家', 'ロビー', 'タワー', 'ビル', 'ジム', 'プール', 'エステ', 'カフェ', 'カジノ', 'シアター', 'キャバレー', 'リゾート', 'オフィス', 'ベランダ', 'マスコット', 'ヒーロー', 'ヒロイン', 'ライバル', 'ラスボス', 'ボス', '敵', '孤独', '不穏', '平穏', '裏切者', '人込み', '庶民', '貴族', '偉人', '仲間', '戦闘', '探検', '調査', '潜入', '追跡', '逃走', '走る', '飛ぶ', '泳ぐ', '説明', '話す', '考える', 'お出かけ', '買い物', '遊ぶ', '休憩', '治療', '世話', '準備', '練習', '公演', '結婚', '恋愛', '祭り', '宴会', '食事', '祈り', '弔い', '儀式', '復讐', '破滅', '悪事', '犯罪', '企む', '偽り', 'いたずら', '魅惑', '応援', '称賛', '勝利', '敗北', '騒動', '喧嘩', '和解', '再起', '集結', '登場', '出会い', '別れ', '回想', '感動', '決意', '失意', '混乱', '悩む', '焦る', 'レース', 'スポーツ', 'コメディ', 'ギャンブル'))
