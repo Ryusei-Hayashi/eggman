@@ -34,6 +34,7 @@
 
 ## Requirement
 - [tensorflow](https://www.tensorflow.org)
+- [geomstats](https://geomstats.github.io)
 - [streamlit](https://streamlit.io)
 - [requests](https://requests.readthedocs.io)
 - [librosa](https://librosa.org)
