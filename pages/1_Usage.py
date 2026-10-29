@@ -5,7 +5,7 @@ st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_
 
 st.title('Usage')
 
-iframe('https://drive.google.com/file/d/1X0O0hd9EHayuhPaUyPzXYJZljInnRtgO/preview')
+st.iframe('https://drive.google.com/file/d/1X0O0hd9EHayuhPaUyPzXYJZljInnRtgO/preview')
 
 st.header('Source Music')
 st.markdown('- Enter the music prepared for the development game\n  - URL Input: Enter the URL of [these sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) or the direct link\n  - File Input: Enter the audio file')
