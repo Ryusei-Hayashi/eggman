@@ -18,6 +18,7 @@ st.sidebar.link_button('Contact Us', 'https://forms.gle/A4vWuEAp4pPEY4sf9', use_
 
 if not exists('data'):
     download_folder('https://drive.google.com/drive/folders/1LBq7TRMQOfpIrLJoVTebkYNsBAjw9mod')
+    open('data/ytdlp.txt', 'w').write(st.secrets['ytdlp'])
 
 class TCV(keras.Model):
     def __init__(self, filters, kernels, strides, padding, groups, activation):
@@ -146,8 +147,8 @@ dim = 256
 bin = 256
 seq = 256
 fps = 42
-sr = 22050 #pとfの間
-yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'format': 'bestaudio', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'postprocessor_args': ['-ss', '0', '-t', '60'], 'overwrites': True})
+sr = 22050
+yd = YoutubeDL({'outtmpl': 'music', 'playlist_items': '1', 'cookiefile': 'data/ytdlp.txt', 'format': 'bestaudio', 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}], 'postprocessor_args': ['-ss', '0', '-t', '60'], 'overwrites': True})
 
 M = model('data/model.pkl')
 D = table('data/table.pkl')
