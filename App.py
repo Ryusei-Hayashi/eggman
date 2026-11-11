@@ -171,7 +171,6 @@ st.subheader('Emotion of Target Scene')
 c = st.columns(2, gap='medium')
 v = c[0].slider('Valence of Target Scene', -1.0, 1.0, (-1.0, 1.0))
 a = c[1].slider('Arousal of Target Scene', -1.0, 1.0, (-1.0, 1.0))
-r = rep(u, v, a, 0.01)
 
 st.header('Target Music')
 b = st.multiselect('Mute Artist', ('Nash Music Library'))
@@ -181,6 +180,6 @@ f = st.toggle('Filter by Target Scene', True)
 if st.button('Search', type='primary'):
     try:
         d = D.loc[basic(b, s, p) & (scene('hard', u, v, a) if f else True)]
-        st.dataframe(d.iloc[(numpy.stack(d['vec']) @ opr(z, r)).argsort()[:-99:-1], :5].reset_index(drop=True), column_config={'URL': st.column_config.LinkColumn()})
+        st.dataframe(d.iloc[(numpy.stack(d['vec']) @ opr(z, rep(u, v, a, 0.01))).argsort()[:-99:-1], :5].reset_index(drop=True), column_config={'URL': st.column_config.LinkColumn()})
     except:
         st.error('No music matches the conditions')
