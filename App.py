@@ -98,19 +98,24 @@ def table(p):
 
 @st.cache_data(max_entries=1)
 def music(m):
-    if isinstance(m, str):
-        r = get(m, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-        if 'html' in r.headers.get('Content-Type', '').lower():
-            yd.download([m])
-        else:
-            open('music.mp3', 'wb').write(r.content)
-    else:
-        open('music.mp3', 'wb').write(m.getvalue())
-    st.html(f'<audio src="data:audio/mp3;base64,{b64encode(open('music.mp3', 'rb').read()).decode()}" controlslist="nodownload" controls></audio>')
-    y = librosa.load('music.mp3', sr=sr, duration=60)[0]
-    b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
-    s = librosa.feature.melspectrogram(y=y, sr=sr, hop_length=sr//fps, n_mels=bin).T
-    return pjt(M.predict(numpy.array([pad(s, b, fps * i) for i in range(20, 40, 6)])))
+    if m:
+        try:
+            if isinstance(m, str):
+                r = get(m, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+                if 'html' in r.headers.get('Content-Type', '').lower():
+                    yd.download([m])
+                else:
+                    open('music.mp3', 'wb').write(r.content)
+            else:
+                open('music.mp3', 'wb').write(m.getvalue())
+            st.html(f'<audio src="data:audio/mp3;base64,{b64encode(open('music.mp3', 'rb').read()).decode()}" controlslist="nodownload" controls></audio>')
+            y = librosa.load('music.mp3', sr=sr, duration=60)[0]
+            b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
+            s = librosa.feature.melspectrogram(y=y, sr=sr, hop_length=sr//fps, n_mels=bin).T
+            return pjt(M.predict(numpy.array([pad(s, b, fps * i) for i in range(20, 40, 6)])))
+        except:
+            st.error('error')
+    return numpy.random.randn(dim)
 
 @st.cache_data(max_entries=2)
 def basic(a, s, p):
@@ -173,8 +178,8 @@ v = c[0].slider('Valence of Target Scene', -1.0, 1.0, (-1.0, 1.0))
 a = c[1].slider('Arousal of Target Scene', -1.0, 1.0, (-1.0, 1.0))
 
 st.header('Target Music')
-b = st.multiselect('Mute Artist', ('Nash Music Library'))
-s = st.multiselect('Mute Site', ('Nash Music Library'))
+b = st.multiselect('Mute Artist', D['Artist'].unique())
+s = st.multiselect('Mute Site', D['Site'].unique())
 p = st.slider('Playtime', time(0), time(0, 59), (time(0), time(0, 59)), timedelta(seconds=10), 'mm:ss')
 f = st.toggle('Filter by Target Scene', True)
 if st.button('Search', type='primary'):
