@@ -155,7 +155,7 @@ M = model('data/model.pkl')
 D = table('data/table.pkl')
 
 st.image('imgs/logo.png')
-st.html('<center>EgGMAn (Engine of Game Music Analysis) searches for game music balancing game-wise consistency and scene-wise individuality</center>')
+st.html('<center>EgGMAn (Engine of Game Music Analysis) searches for game music balancing <i>game-wise consistency</i> and <i>scene-wise individuality</i></center>')
 
 st.header('Source Music')
 t = st.tabs(['URL Input', 'File Input'], on_change='rerun')
