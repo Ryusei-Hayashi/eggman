@@ -182,4 +182,4 @@ if st.button('Search', type='primary'):
         d = D.loc[basic(b, s, p) & (scene('hard', u, v, a) if f else True)]
         st.dataframe(d.iloc[(numpy.stack(d['vec']) @ opr(z, rep(u, v, a, 0.01))).argsort()[:-99:-1], :5].reset_index(drop=True), column_config={'URL': st.column_config.LinkColumn()})
     except:
-        st.error('No music matches the conditions')
+        st.error('There are no music tracks matching your search')
