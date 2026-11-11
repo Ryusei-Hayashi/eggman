@@ -113,12 +113,12 @@ def music(m):
     return pjt(M.predict(numpy.array([pad(s, b, fps * i) for i in range(20, 40, 6)])))
 
 @st.cache_data(max_entries=2)
-def scene(c, t, v, a):
-    return D[c].apply(lambda x: set(t) <= set(x)) & (v[0] <= D['pn']) & (D['pn'] <= v[1]) & (a[0] <= D['ap']) & (D['ap'] <= a[1])
-
-@st.cache_data(max_entries=2)
 def basic(a, s, p):
     return ~D['Artist'].isin(a) & ~D['Site'].isin(s) & (p[0].strftime('%M:%S') <= D['Time']) & (D['Time'] <= p[1].strftime('%M:%S'))
+
+@st.cache_data(max_entries=2)
+def scene(c, t, v, a):
+    return D[c].apply(lambda x: set(t) <= set(x)) & (v[0] <= D['pn']) & (D['pn'] <= v[1]) & (a[0] <= D['ap']) & (D['ap'] <= a[1])
 
 def idx(n, v):
     i = n.searchsorted(v)
