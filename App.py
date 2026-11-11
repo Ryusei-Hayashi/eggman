@@ -112,7 +112,7 @@ def music(m):
             y = librosa.load('music.mp3', sr=sr, duration=60)[0]
             b = librosa.beat.beat_track(y=y, sr=sr, hop_length=sr//fps)[1]
             s = librosa.feature.melspectrogram(y=y, sr=sr, hop_length=sr//fps, n_mels=bin).T
-            return M.predict(numpy.array([pad(s, b, fps * i) for i in range(20, 40, 6)]))
+            return M.predict(numpy.array([pad(s, b, i) for i in range(20, 40, 6)]))
         except:
             st.error(f'Unable to access {m}')
     return numpy.random.randn(dim)
@@ -126,11 +126,11 @@ def scene(c, t, v, a):
     return D[c].apply(lambda x: set(t) <= set(x)) & (v[0] <= D['pn']) & (D['pn'] <= v[1]) & (a[0] <= D['ap']) & (D['ap'] <= a[1])
 
 def idx(n, v):
-    i = n.searchsorted(v)
+    i = n.searchsorted(fps * v)
     return n[i-1:i+1].sum() // 2 if 0 < i < len(n) else v
 
 def pad(s, b, t):
-    i, j = idx(b, t - 3 * fps), idx(b, t + 3 * fps)
+    i, j = idx(b, t - 3), idx(b, t + 3)
     return numpy.pad(s[i:j], ((0, max(0, seq + i - j)), (0, 0)))[:seq]
 
 def l2n(z):
