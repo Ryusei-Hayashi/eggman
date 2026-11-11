@@ -1,6 +1,6 @@
 # EgGMAn
 - This repository is for Deploying [EgGMAn (Engine of Game Music Analysis)](https://eggman.streamlit.app)
-- EgGMAn searches for game music balancing game-wise consistency and scene-wise individuality
+- EgGMAn searches for game music balancing _game-wise consistency_ and _scene-wise individuality_
 
 ## Usage
 ### Source Music
@@ -10,7 +10,7 @@
 
 ### Traget Scene
 - Enter the scene where no music is prepared
-- Enter the scene by combining about 200 tags such as _Opening_, _Dungeon_, ...
+- Enter by combining about 200 tags such as _Opening_, _Dungeon_
 
 #### Emotion of Target Scene
 - Enter the emotion of the scene using sliders
@@ -38,6 +38,7 @@
 - [streamlit](https://streamlit.io)
 - [requests](https://requests.readthedocs.io)
 - [librosa](https://librosa.org)
+- [pandas](https://pandas.pydata.org)
 - [yt_dlp](https://github.com/yt-dlp/yt-dlp)
 - [gdown](https://github.com/wkentaro/gdown)
 - [numpy](https://numpy.org)
