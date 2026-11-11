@@ -11,7 +11,7 @@ st.header('Source Music')
 st.markdown('- Enter the music prepared for the development game\n  - URL Input: Enter the URL of [these sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md) or the direct link\n  - File Input: Enter the audio file')
 
 st.header('Target Scene')
-st.markdown('- Enter the scene where no music is prepared\n- Enter the scene by combining about 200 tags such as _Opening_, _Dungeon_, ...')
+st.markdown('- Enter the scene where no music is prepared\n- Enter by combining about 200 tags such as _Opening_, _Dungeon_')
 
 st.subheader('Emotion of Target Scene')
 st.markdown('- Enter the emotion of the scene using sliders\n  - Valence: Rises in positive scenes and falls in negative scenes\n  - Arousal: Rises in active scenes and falls in passive scenes')
