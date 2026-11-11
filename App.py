@@ -2,6 +2,7 @@
 #from geomstats.geometry.hypersphere import Hypersphere
 from datetime import time, timedelta
 from gdown import download_folder
+from pandas import read_pickle
 from yt_dlp import YoutubeDL
 from base64 import b64encode
 from tensorflow import keras
@@ -93,7 +94,7 @@ def model(p):
 
 @st.cache_data(max_entries=1)
 def table(p):
-    return load(open(p, 'rb'))
+    return read_pickle(p)
 
 @st.cache_data(max_entries=1)
 def music(m):
