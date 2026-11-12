@@ -8,5 +8,3 @@ pandas
 yt_dlp
 gdown
 numpy
-
-youtube-po-token-generator
