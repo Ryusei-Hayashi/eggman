@@ -106,7 +106,7 @@ def music(m):
                 r = get(m, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
                 if 'html' in r.headers.get('Content-Type', '').lower():
                     #yd.download([m])
-                    YouTube(m, use_po_token=True).streams.filter(only_audio=True)[-1].download(None, 'music.mp3')
+                    YouTube(m).streams.filter(only_audio=True)[-1].download(None, 'music.mp3')
                 else:
                     open('music.mp3', 'wb').write(r.content)
             else:
