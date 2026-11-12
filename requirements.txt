@@ -1,6 +1,7 @@
 tensorflow
 geomstats
 streamlit
+pytubefix
 requests
 librosa
 pandas
