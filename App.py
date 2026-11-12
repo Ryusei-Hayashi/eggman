@@ -1,8 +1,10 @@
 #from geomstats.learning import frechet_mean, geometric_median
 #from geomstats.geometry.hypersphere import Hypersphere
+from tensorflow.keras.models import load_model
 from datetime import time, timedelta
 from gdown import download_folder
 from pandas import read_pickle
+from pytubefix import YouTube
 from yt_dlp import YoutubeDL
 from base64 import b64encode
 from tensorflow import keras
@@ -103,7 +105,8 @@ def music(m):
             if isinstance(m, str):
                 r = get(m, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
                 if 'html' in r.headers.get('Content-Type', '').lower():
-                    yd.download([m])
+                    #yd.download([m])
+                    YouTube(m).streams.filter(only_audio=True)[-1].download(None, 'music.mp3')
                 else:
                     open('music.mp3', 'wb').write(r.content)
             else:
